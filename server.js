@@ -27,6 +27,9 @@ var bit_asks_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,
 var pol_bids_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
 var pol_asks_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
 
+var bit_tot = 0;
+var pol_tot = 0;
+
 for (var i = 0; i <= 100; i++) {
     rate_bin.push(i/1000);
 }
@@ -34,7 +37,7 @@ for (var i = 0; i <= 100; i++) {
 
 
 // bids in Bittrex order books
-https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=buy", (resp) => {
+https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-ETH&type=buy", (resp) => {
 
   let data = '';
   resp.on('data', (chunk) => {
@@ -42,12 +45,14 @@ https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=
   });
 
   resp.on('end', () => {
-    console.log(JSON.parse(data)["result"].length + " bids in Bittrex order books");
     for(i=0;i<JSON.parse(data)["result"].length;i++){
       bit_bids_r.push( JSON.parse(data)["result"][i].Rate);
       bit_bids_q.push( JSON.parse(data)["result"][i].Quantity);
       bit_bids.push( [bit_bids_r[i], bit_bids_q[i]]);
     }
+
+    console.log("bit_bids_r.length  " + bit_bids_r.length);
+    console.log("bit_bids_q.length  " + bit_bids_q.length);
 
     var j = 0;    // bin rates to 0.001
     while(j < bit_bids_r.length){
@@ -70,7 +75,7 @@ https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=
 
 
 // asks in Bittrex order books
-https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=sell", (resp) => {
+https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-ETH&type=sell", (resp) => {
 
   let data = '';
   resp.on('data', (chunk) => {
@@ -78,7 +83,6 @@ https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=
   });
 
   resp.on('end', () => {
-    console.log(JSON.parse(data)["result"].length + " asks in Bittrex order books");
     for(i=0;i<JSON.parse(data)["result"].length;i++){
       bit_asks_r.push( JSON.parse(data)["result"][i].Rate);
       bit_asks_q.push( JSON.parse(data)["result"][i].Quantity);
@@ -97,11 +101,14 @@ https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=
 
     console.log(Math.min.apply(Math,bit_asks_r) + " min of bit asks array");
     console.log(Math.max.apply(Math,bit_asks_r));
+
+    bit_tot = bit_asks_r.length+bit_bids_r.length;
   });
 
 }).on("error", (err) => {
  console.log("ERROR: " + err.message);
 });
+
 
 
 
@@ -134,7 +141,6 @@ https.get("https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_
       pol_asks_q_bin[pol_asks_r[k]*1000] += pol_asks_r[k];
     }
 
-    console.log(pol_asks_r.length + " asks in Poloniex order books");
     console.log(Math.min.apply(Math,pol_asks_r) + " min of pol asks array");
     console.log(Math.max.apply(Math,pol_asks_r));
 
@@ -155,9 +161,10 @@ https.get("https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_
       pol_bids_q_bin[pol_bids_r[k]*1000] += pol_bids_r[k];
     }
 
-    console.log(pol_bids_r.length + " bids in Poloniex order books");
     console.log(Math.min.apply(Math,pol_bids_r) + " min of pol bids array");
     console.log(Math.max.apply(Math,pol_bids_r));
+
+    pol_tot = (pol_asks_r.length + pol_bids_r.length);
 
  });
 
@@ -166,7 +173,7 @@ https.get("https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_
 });
 
 
-// send data to html
+// send data to html via pug
 
 app.get('/', function(req, res) {
   console.log("you've loaded the webpage");
@@ -216,7 +223,7 @@ app.get('/', function(req, res) {
       automargin: true
     },
     xaxis: {
-      title: 'ETH / BTC rate',
+      title: 'BTC / ETH rate',
       tickmode: 'array',
       automargin: true
     },
@@ -225,14 +232,49 @@ app.get('/', function(req, res) {
     plot_bgcolor: 'black'
   };
 
+  var top_bit_r = []
+  var top_bit_q = []
+  var top_pol_r = []
+  var top_pol_q = []
+
+  for (var i = 0; i < rate_bin.length; i++) {    // left column
+    if (bit_bids_q_bin[100-i] > 0) {
+      top_bit_q = bit_bids_q_bin.slice(100-i-6, 100-i);
+      top_bit_q = top_bit_q.concat(bit_asks_q_bin.slice(100-i, 100-i+6));
+      top_bit_r = rate_bin.slice(100-i-6, 100-i+6);
+      break;
+    }
+  }
+
+  for (var j = 0; j < rate_bin.length; j++) {    // right column
+    if (pol_bids_q_bin[100-j] > 0) {
+      top_pol_q = pol_bids_q_bin.slice(100-j-6, 100-j);
+      top_pol_q = top_pol_q.concat(pol_asks_q_bin.slice(100-j, 100-j+6));
+      top_pol_r = rate_bin.slice(100-j-6, 100-j+6);
+      break;
+    }
+
+  }
+
+  console.log(bit_bids);
+  console.log(bit_asks);
+
+  top_pol_q = top_pol_q.concat(pol_asks_q_bin.slice(100-j, 100-j+6));
+
   var data2 = [Bittrex_Bids, Poloniex_Bids, Bittrex_Asks, Poloniex_Asks];
 
   res.render('index', {
     title: 'home',
     hello: 'ted',
     layouti: JSON.stringify(layout),
-    datai: JSON.stringify(data2)
-  })
+    bit_t: bit_tot,
+    pol_t: pol_tot,
+    datai: JSON.stringify(data2),
+    tbr: top_bit_r, //JSON.stringify(top_bit_r),
+    tbq: top_bit_q, //JSON.stringify(top_bit_q),
+    tpr: top_pol_r, //JSON.stringify(top_pol_r),
+    tpq: top_pol_q  //JSON.stringify(top_pol_q)
+  });
   // res.send('Hello World!')
 });
 
