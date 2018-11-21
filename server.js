@@ -168,7 +168,7 @@ https.get("https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_
 
 // send data to html
 
-server.get('/', (req, res) => {
+server.get('*', (req, res) => {
   console.log("you've loaded the webpage");
 
   fs.readFile(
