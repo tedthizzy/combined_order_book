@@ -8,27 +8,27 @@ app.use(express.static(__dirname + '/public'))
 //
 // const plotly = require('plotly')('ted1508', 'MXqluxk6kopZ0HoOSIHu');
 //
-// var https = require("https");
-// //var plotly = require('plotly')('ted1508', 'MXqluxk6kopZ0HoOSIHu');
-// var bit_bids = []; // [rate,quantity]
-// var bit_asks = [];
-// var pol_asks = [];
-// var pol_bids = [];
-//
-// var bit_bids_r = [];
-// var bit_bids_q = [];
-// var bit_asks_r = [];
-// var bit_asks_q = [];
-//
-// var rate_bin = [];
-// var bit_bids_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
-// var bit_asks_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
-// var pol_bids_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
-// var pol_asks_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
-//
-// for (var i = 0; i <= 100; i++) {
-//     rate_bin.push(i/1000);
-// }
+var https = require("https");
+//var plotly = require('plotly')('ted1508', 'MXqluxk6kopZ0HoOSIHu');
+var bit_bids = []; // [rate,quantity]
+var bit_asks = [];
+var pol_asks = [];
+var pol_bids = [];
+
+var bit_bids_r = [];
+var bit_bids_q = [];
+var bit_asks_r = [];
+var bit_asks_q = [];
+
+var rate_bin = [];
+var bit_bids_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
+var bit_asks_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
+var pol_bids_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
+var pol_asks_q_bin = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
+
+for (var i = 0; i <= 100; i++) {
+    rate_bin.push(i/1000);
+}
 
 
 
