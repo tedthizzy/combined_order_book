@@ -267,7 +267,6 @@ app.get('/', function(req, res) {
       tickmode: 'array',
       automargin: true
     },
-    displayModeBar: false,
     showlegend: false,
     paper_bgcolor: 'transparent',
     plot_bgcolor: 'black'
@@ -300,7 +299,7 @@ app.get('/', function(req, res) {
   top_pol_q = top_pol_q.concat(pol_asks_q_bin.slice(100-j, 100-j+6));
 
   var overlapz = (top_bit_r[5]+top_bit_r[0])/2 - (top_pol_r[5]+top_pol_r[0])/2;
-  
+
   if (overlapz > 0) {
     overlapz = Math.abs(overlapz);
   } else {
@@ -316,6 +315,7 @@ app.get('/', function(req, res) {
     bit_t: bit_asks_r.length+bit_bids_r.length,
     pol_t: pol_tot,
     datai: JSON.stringify(data2),
+    imode: '{displayModeBar: false}',
     tbr: top_bit_r, //JSON.stringify(top_bit_r),
     tbq: top_bit_q, //JSON.stringify(top_bit_q),
     tpr: top_pol_r, //JSON.stringify(top_pol_r),

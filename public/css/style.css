@@ -226,31 +226,3 @@ th, td {
 }
 
 tr:hover {background-color:#1D2635;}
-
-
-
-
-
-/* -------------------------------------------------------------------------- */
-
-
-
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  background-color: #525286;
-  color: #FFFFFF;
-  margin-bottom: 50px;
-}
-
-
-.container {
-  width: 960px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-}
