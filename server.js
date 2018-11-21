@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
-const port = 3000;
+//const port = 3000;
 const pug = require('pug');
 const people = require('./people.json');
 app.set('view engine', 'pug');
@@ -248,4 +248,4 @@ app.get('/', (req, res) => {
 });
 
 
-app.listen(port, () => console.log(`We are listening on port ${port}`))
+app.listen(process.env.PORT || 4000, () => console.log(`We are listening on port`))
