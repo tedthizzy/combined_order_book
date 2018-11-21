@@ -170,78 +170,68 @@ https.get("https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_
 app.get('/', function(req, res) {
   console.log("you've loaded the webpage");
 
-  // fs.readFile(
-  // './templates/index.html','utf-8',(err, data) => {
-  //   if (err) {
-  //     console.log("whatsup error!");
-  //   }
-  //
-  //
-  //   var Bittrex_Bids = {
-  //     x: rate_bin,
-  //     y: bit_bids_q_bin,
-  //     fill: 'tozeroy',
-  //     type: 'scatter'
-  //   };
-  //
-  //   var Bittrex_Asks = {
-  //     x: rate_bin,
-  //     y: bit_asks_q_bin,
-  //     fill: 'tonexty',
-  //     type: 'scatter'
-  //   };
-  //
-  //   var Poloniex_Bids = {
-  //     x: rate_bin,
-  //     y: pol_bids_q_bin,
-  //     fill: 'tozeroy',
-  //     type: 'scatter'
-  //   };
-  //
-  //   var Poloniex_Asks = {
-  //     x: rate_bin,
-  //     y: pol_asks_q_bin,
-  //     fill: 'tonexty',
-  //     type: 'scatter'
-  //   };
-  //
-  //   var layout = {
-  //     autosize: false,
-  //     width: 475,
-  //     height: 325,
-  //     margin: {
-  //       l: 35,
-  //       // r: 10,
-  //       b: 15,
-  //       // t: 100,
-  //       pad: 3
-  //     },
-  //     yaxis: {
-  //       title: 'Quantity',
-  //       tickmode: 'array',
-  //       automargin: true
-  //     },
-  //     xaxis: {
-  //       title: 'ETH / BTC rate',
-  //       tickmode: 'array',
-  //       automargin: true
-  //     },
-  //     showlegend: false,
-  //     paper_bgcolor: 'transparent',
-  //     plot_bgcolor: 'black'
-  //   };
-  //
-  //   var data2 = [Bittrex_Bids, Poloniex_Bids, Bittrex_Asks, Poloniex_Asks];
-  //
-  //   res.render('index', {
-  //     title: 'home',
-  //     hello: 'ted',
-  //     layouti: JSON.stringify(layout),
-  //     datai: JSON.stringify(data2)
-  //   })
-  //
-  //   console.log("done reading");
-  // });
+  var Bittrex_Bids = {
+    x: rate_bin,
+    y: bit_bids_q_bin,
+    fill: 'tozeroy',
+    type: 'scatter'
+  };
+
+  var Bittrex_Asks = {
+    x: rate_bin,
+    y: bit_asks_q_bin,
+    fill: 'tonexty',
+    type: 'scatter'
+  };
+
+  var Poloniex_Bids = {
+    x: rate_bin,
+    y: pol_bids_q_bin,
+    fill: 'tozeroy',
+    type: 'scatter'
+  };
+
+  var Poloniex_Asks = {
+    x: rate_bin,
+    y: pol_asks_q_bin,
+    fill: 'tonexty',
+    type: 'scatter'
+  };
+
+  var layout = {
+    autosize: false,
+    width: 475,
+    height: 325,
+    margin: {
+      l: 35,
+      // r: 10,
+      b: 15,
+      // t: 100,
+      pad: 3
+    },
+    yaxis: {
+      title: 'Quantity',
+      tickmode: 'array',
+      automargin: true
+    },
+    xaxis: {
+      title: 'ETH / BTC rate',
+      tickmode: 'array',
+      automargin: true
+    },
+    showlegend: false,
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'black'
+  };
+
+  var data2 = [Bittrex_Bids, Poloniex_Bids, Bittrex_Asks, Poloniex_Asks];
+
+  res.render('index', {
+    title: 'home',
+    hello: 'ted',
+    layouti: JSON.stringify(layout),
+    datai: JSON.stringify(data2)
+  })
   // res.send('Hello World!')
 });
 
