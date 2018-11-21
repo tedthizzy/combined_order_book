@@ -242,7 +242,7 @@ app.get('/', function(req, res) {
 
     console.log("done reading");
   });
-  //res.send('Hello World!')
+  res.send('Hello World!')
 });
 
 
