@@ -1,0 +1,16 @@
+{
+  "name": "Combined_Order_Book",
+  "author": "Ted Thayer",
+  "description": "Combined Order Book Demo for BTC_ETH Bid/Asks",
+  "main": "server.js",
+  "scripts": {
+    "start": "npx pm2 start server.js --watch"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "pm2": "^2.10.3"
+  }
+}

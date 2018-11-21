@@ -1,0 +1,56 @@
+var rate_bin = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+var pol_bids_q_bin = [9,9,8,7,3,0,0,0,0,0];
+var bit_bids_q_bin = [9,9,8,7,3,0,0,0,0,0]/2;
+var bit_asks_q_bin = [0,0,0,0,0,2,6,7,8,9];
+var pol_asks_q_bin = [0,0,0,0,0,2,6,7,8,9]/2;
+var trace1 = {
+x: rate_bin,
+y: bit_bids_q_bin,
+fill: 'tozeroy',
+type: 'scatter'
+};
+var trace2 = {
+x: rate_bin,
+y: bit_asks_q_bin,
+fill: 'tonexty',
+type: 'scatter'
+};
+var trace3 = {
+x: rate_bin,
+y: pol_bids_q_bin,
+fill: 'tozeroy',
+type: 'scatter'
+};
+var trace4 = {
+x: rate_bin,
+y: pol_asks_q_bin,
+fill: 'tonexty',
+type: 'scatter'
+};
+var layout = {
+autosize: false,
+width: 475,
+height: 325,
+margin: {
+l: 35,
+// r: 10,
+b: 15,
+// t: 100,
+pad: 3
+},
+yaxis: {
+title: 'Quantity',
+tickmode: 'array',
+automargin: true
+},
+xaxis: {
+title: 'ETH / BTC rate',
+tickmode: 'array',
+automargin: true
+},
+showlegend: false,
+paper_bgcolor: 'transparent',
+plot_bgcolor: 'black'
+};
+var data2 = [trace1, trace2, trace3, trace4];
+Plotly.plot("plotbox_B2",data2, layout, );
