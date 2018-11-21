@@ -4,7 +4,7 @@
   "description": "Combined Order Book Demo for BTC_ETH Bid/Asks",
   "main": "server.js",
   "scripts": {
-    "start": "npx pm2 start server.js --watch"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.16.4",
