@@ -32,7 +32,8 @@ for (var i = 0; i <= 100; i++) {
 
 
 
-bids in Bittrex order books
+// bids in Bittrex order books
+
 https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=buy", (resp) => {
 
   let data = '';
@@ -105,6 +106,7 @@ https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=
 
 
 // Poloniex (Bids & Asks)
+
 https.get("https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_ETH&depth=10000", (resp) => {
 
   let data = '';
