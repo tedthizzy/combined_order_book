@@ -102,7 +102,6 @@ https.get("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-ETH&type=
     console.log(Math.min.apply(Math,bit_asks_r) + " min of bit asks array");
     console.log(Math.max.apply(Math,bit_asks_r));
 
-    bit_tot = bit_asks_r.length+bit_bids_r.length;
   });
 
 }).on("error", (err) => {
@@ -178,32 +177,73 @@ https.get("https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_
 app.get('/', function(req, res) {
   console.log("you've loaded the webpage");
 
+  var tot_bid = pol_bids_q_bin.map((a, i) => a + bit_bids_q_bin[i]);
+  var tot_ask = pol_asks_q_bin.map((a, i) => a + bit_asks_q_bin[i]);
+
   var Bittrex_Bids = {
     x: rate_bin,
     y: bit_bids_q_bin,
     fill: 'tozeroy',
-    type: 'scatter'
+    line: {
+      color: 'rgb(0, 255, 0)',
+    },
+    type: 'scatter',
+    name: 'Bittrex Bids'
   };
 
   var Bittrex_Asks = {
     x: rate_bin,
     y: bit_asks_q_bin,
-    fill: 'tonexty',
-    type: 'scatter'
+    fill: 'tozeroy',
+    line: {
+      color: 'rgb(255, 16, 0)',
+    },
+    type: 'scatter',
+    name: 'Bittrex Asks'
   };
 
   var Poloniex_Bids = {
     x: rate_bin,
     y: pol_bids_q_bin,
     fill: 'tozeroy',
-    type: 'scatter'
+    line: {
+      color: 'rgb(0, 160, 1)',
+    },
+    type: 'scatter',
+    name: 'Poloniex Bids'
   };
 
   var Poloniex_Asks = {
     x: rate_bin,
     y: pol_asks_q_bin,
-    fill: 'tonexty',
-    type: 'scatter'
+    fill: 'tozeroy',
+    line: {
+      color: 'rgb(153, 10, 0)',
+    },
+    type: 'scatter',
+    name: 'Poloniex Asks'
+  };
+
+  var Combined_Bids = {
+    x: rate_bin,
+    y: tot_bid,
+    fill: 'tozeroy',
+    line: {
+      color: 'rgb(0, 89, 1)',
+    },
+    type: 'scatter',
+    name: 'Combined Bids'
+  };
+
+  var Combined_Asks = {
+    x: rate_bin,
+    y: tot_ask,
+    fill: 'tozeroy',
+    line: {
+      color: 'rgb(91, 5, 0)',
+    },
+    type: 'scatter',
+    name: 'Combined Asks'
   };
 
   var layout = {
@@ -227,6 +267,7 @@ app.get('/', function(req, res) {
       tickmode: 'array',
       automargin: true
     },
+    displayModeBar: false,
     showlegend: false,
     paper_bgcolor: 'transparent',
     plot_bgcolor: 'black'
@@ -256,18 +297,23 @@ app.get('/', function(req, res) {
 
   }
 
-  console.log(bit_bids);
-  console.log(bit_asks);
-
   top_pol_q = top_pol_q.concat(pol_asks_q_bin.slice(100-j, 100-j+6));
 
-  var data2 = [Bittrex_Bids, Poloniex_Bids, Bittrex_Asks, Poloniex_Asks];
+  var overlapz = (top_bit_r[5]+top_bit_r[0])/2 - (top_pol_r[5]+top_pol_r[0])/2;
+  
+  if (overlapz > 0) {
+    overlapz = Math.abs(overlapz);
+  } else {
+    overlapz = 0;
+  }
+
+  var data2 = [Combined_Asks, Combined_Bids, Poloniex_Asks, Poloniex_Bids, Bittrex_Asks, Bittrex_Bids];
 
   res.render('index', {
     title: 'home',
-    hello: 'ted',
+    olap: overlapz,
     layouti: JSON.stringify(layout),
-    bit_t: bit_tot,
+    bit_t: bit_asks_r.length+bit_bids_r.length,
     pol_t: pol_tot,
     datai: JSON.stringify(data2),
     tbr: top_bit_r, //JSON.stringify(top_bit_r),
