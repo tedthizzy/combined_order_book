@@ -1,5 +1,5 @@
 {
-  "name": "Combined_Order_Book",
+  "name": "combined_order_book",
   "author": "Ted Thayer",
   "description": "Combined Order Book Demo for BTC_ETH Bid/Asks",
   "main": "server.js",
@@ -12,5 +12,18 @@
   },
   "devDependencies": {
     "pm2": "^2.10.3"
-  }
+  },
+  "engines": {
+    "node": "10.13.0"
+  },
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tedthizzy/combined_order_book.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tedthizzy/combined_order_book/issues"
+  },
+  "homepage": "https://github.com/tedthizzy/combined_order_book#readme"
 }

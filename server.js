@@ -3,7 +3,6 @@ const app = express();
 const fs = require('fs');
 //const port = 3000;
 const pug = require('pug');
-const people = require('./people.json');
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
 
@@ -248,4 +247,4 @@ app.get('/', (req, res) => {
 });
 
 
-app.listen(process.env.PORT || 4000, () => console.log(`We are listening on port`))
+app.listen(process.env.PORT || 4000, () => console.log(`We are listening on port`));
