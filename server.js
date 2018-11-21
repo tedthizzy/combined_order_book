@@ -1,10 +1,10 @@
 const express = require('express');
-const server = express();
+const app = express();
 const fs = require('fs');
 const port = process.env.PORT || 5000;
 const pug = require('pug');
-server.set('view engine', 'pug');
-server.use(express.static(__dirname + '/public'));
+app.set('port', (process.env.PORT || 5000))
+app.use(express.static(__dirname + '/public'))
 
 
 const plotly = require('plotly')('ted1508', 'MXqluxk6kopZ0HoOSIHu');
@@ -168,7 +168,7 @@ https.get("https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_
 
 // send data to html
 
-server.get('*', (req, res) => {
+app.get('/', function(req, res) {
   console.log("you've loaded the webpage");
 
   fs.readFile(
@@ -247,6 +247,6 @@ server.get('*', (req, res) => {
 });
 
 
-server.listen(port, () => {
-    console.log("App is running on port " + port);
-});
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'))
+})
